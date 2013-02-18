@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+
+<div data-bb-type="screen" data-bb-effect="slide-left">
+	<div data-bb-type="round-panel"> 
+		<div data-bb-type="panel-header">Log APIs</div>
+		<div data-bb-type="label-control-container">
+			<div data-bb-type="row">
+			   <div data-bb-type="label">Log message</div>
+			   <input type="text" id="logline" value="" placeholder="Log message"/>
+			</div>
+			<div data-bb-type="row">
+			  	<div data-bb-type="label">&nbsp;</div>
+				<select data-bb-label="Log level" id="loglevel">
+					<option value="DEBUG">DEBUG</option>
+					<option value="INFO">INFO</option>
+					<option value="WARNING">WARNING</option>
+					<option value="ERROR">ERROR</option>
+					<option value="FATAL">FATAL</option>
+					<option value="EVENT">EVENT</option>
+				</select>
+			</div>
+			<div data-bb-type="row">
+				<div data-bb-type="label">&nbsp;</div>
+			   <div data-bb-type="button" data-bb-style="stretch" onclick="sendLogMessage();">Send log message</div>
+		   </div>
+		</div>
+	</div>
+
+	<div data-bb-type="action-bar">
+		<div data-bb-type="action" data-bb-style="button"  data-bb-img="images/actionBar/cog_dark_theme.png" onclick="bb.pushScreen('settings.htm', 'settings');">Settings</div>
+		<div data-bb-type="action" data-bb-style="button"  data-bb-img="images/actionBar/cog_dark_theme.png" onclick="bb.pushScreen('log.htm', 'log');">Log</div>
+		<div data-bb-type="action" data-bb-style="button"  data-bb-img="images/actionBar/cog_dark_theme.png" onclick="bb.pushScreen('data.htm', 'data');">Data</div>
+		<div data-bb-type="action" data-bb-style="button"  data-bb-img="images/actionBar/cog_dark_theme.png" onclick="bb.pushScreen('functions.htm', 'functions');">CloudFunctions</div>
+	</div>
+</div>

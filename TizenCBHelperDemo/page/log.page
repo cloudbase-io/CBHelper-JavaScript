@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<document>
+    <documentInfo>
+        <title>test</title>
+        <author>noname</author>
+        <version>0.1.1</version>
+    </documentInfo>
+    <documentData>
+        <tizen.doc>
+            <tizen.page id="log" data-add-back-btn="none">
+                <tizen.header id="header1" text="cloudbase.io demo application"/>
+                <html.heading id="heading1" text="Log APIs" size="3"/>
+                <html.formcontrol id="formcontrol1" method="GET" data-ajax="true">
+                    <html.textinput id="logMessageInput" text="" type="text" placeholder="Log message"/>
+                    <html.textinput id="logLevelInput" text="" type="text" placeholder="Log severity"/>
+                </html.formcontrol>
+                <tizen.button id="sendLogButton" text="Log message" data-corners="true" data-iconpos="left" data-inline="false" ontap="sendLogButton_ontap"/>
+                <tizen.footer id="footer1">
+                    <tizen.controlbar id="controlbar1" data-style="toolbar">
+                        <tizen.controlbaritem id="controlbaritem1" text="Settings" href="settings.html" data-icon="ctrlbar-settings"/>
+                        <tizen.controlbaritem id="controlbaritem2" text="Log" href="log.html" data-icon="ctrlbar-compose"/>
+                        <tizen.controlbaritem id="controlbaritem3" text="Data" href="data.html" data-icon="ctrlbar-attach"/>
+                        <tizen.controlbaritem id="controlbaritem4" text="CloudFunctions" href="cloudfunction.html" data-icon="ctrlbar-info"/>
+                        <tizen.controlbaritem id="controlbaritem5" text="Notifications" href="notifications.html" data-icon="ctrlbar-set_as"/>
+                    </tizen.controlbar>
+                </tizen.footer>
+            </tizen.page>
+        </tizen.doc>
+    </documentData>
+</document>

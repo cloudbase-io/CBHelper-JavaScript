@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--
+* @file index.html
+* @author Ali Sarrafi
+*
+* Template application that provides Native UI functionality from
+* HTML5 aand JavaScript.
+-->
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<script type="text/javascript" charset="utf-8" src="js/wormhole.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/CBHelper/json.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/CBHelper/md5.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/CBHelper/CBXMLHttpRequest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/CBHelper/CBHelper.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/CBHelper/platforms/MoSyncHelper.js"></script>
+	<script type="text/javascript">
+		var helper;
+		var moSyncHelper;
+	
+		/**
+		 * Initialization.
+		 */
+		function initialize()
+		{
+			document.addEventListener("backbutton", close, true);
+			
+			mosync.nativeui.initUI();
+			try {
+				
+			} catch (ex) {
+				mosync.rlog("error: " + ex);
+			}
+		}
+
+		/**
+		 * Handle the backbutton event.
+		 */
+		function close()
+		{
+			// Close the application if the back key is pressed.
+			mosync.bridge.send(["close"]);
+		}
+
+		/**
+		 * Called by the NativeUI library when the UI is ready to
+		 * be shown. Show the main screen here.
+		 *
+		 * Here we illustrate how to add events to widgets and how to
+		 * create widgets from JavaScript code.
+		 */
+		mosync.nativeui.UIReady = function()
+		{
+			// First get the screen we want to show.
+			var mainScreen = document.getNativeElementById("mainScreen");
+			var thisHelper = helper;
+			mainScreen.addEventListener("TabChanged", function() {
+				var curTab = document.getNativeElementById("mainScreen");
+				thisHelper.logNavigation("mainScreen");
+			});
+			
+			// Show the screen.
+			mainScreen.show();
+		}
+		
+		function CBSaveSettingsClicked() {
+			try {
+				mosync.rlog("init mosync");
+				moSyncHelper = new MoSyncHelper();
+				
+				var appCode, appUniq, appPwd;
+				
+				document.getNativeElementById("CBAppCode").getProperty("text", function(name, value) { appCode = value; });
+				document.getNativeElementById("CBAppUniq").getProperty("text", function(name, value) { appUniq = value; });
+				document.getNativeElementById("CBAppPwd").getProperty("text", function(name, value) { 
+					appPwd = hex_md5(value);
+					helper = new CBHelper(appCode, appUniq, moSyncHelper);
+					helper.setPassword(appPwd);
+					mosync.rlog("done");
+					window.helper = helper;
+				});
+			} catch (ex) {
+				mosync.rlog("error while initializing CBHelper " + JSON.tringify(ex));
+			}
+		}
+		
+		function CBLogLineClicked() {
+			mosync.rlog("session id: " + helper.sessionId);
+			try {
+				helper.writeLog("test log from JS", "DEFAULT", helper.CBLogLevel.DEBUG);
+			} catch (ex) {
+				mosync.rlog("error: " + ex);
+			}
+		}
+		
+		function CBInsertClicked(hasFiles) {
+			try {
+				var document = {
+					"first_name" : "Stefano",
+					"last_name" : "Buliani",
+					"address" : [ "flat 6", "389 Liverpool road", "London", "N1 1NP"]
+				};
+				if (!hasFiles)
+					helper.insertDocument("mosync_reload", document, null, null);
+				else {
+					try {
+						mosync.rlog("called insert with files");
+						helper.prepareAttachmentFileFromPath("downloaded.jpg", function(fileAttachment) {
+							if (fileAttachment != null) {
+						    	helper.insertDocument("mosync_reload_files_2", document, [fileAttachment], null);
+							}
+						    //console.log("loaded " + evt.target.result );
+						});
+					} catch (ex) {
+						console.log("Error reading " + ex);
+					}
+					
+					
+				}
+			} catch (ex) {
+				mosync.rlog("error: " + ex);
+			}
+		}
+		
+		function CBSearchClicked() {
+			helper.searchDocuments({ "first_name" : "Stefano" }, "mosync_reload", function(resp) {
+				alert(resp.outputString);
+			});
+		}
+		
+		function CBNotifSubscribe() {
+			 var pushNotificationManager = new PushNotificationManager();
+			 pushNotificationManager.register(
+			     function(token) {
+			     	helper.subscribeDevice(token, 'CBHelperTest', function(resp) {
+			     		alert(resp.outputString);
+			     	});
+			     },
+			     function(error) {
+			     	mosync.rlog("error: " + JSON.stringify(error));
+			     });
+		}
+		
+		function CBNotifPush() {
+			helper.sendNotification('Testing notification', 'CBHelperTest', -1, '', 'development');
+		}
+		
+		function CBFunctionExecute() {
+			// this function simply returns 2+2
+			helper.executeCloudFunction("test-sum", null, function(resp) {
+				JSON.stringify(resp);
+			});
+		}
+		
+		function CBAppletExecute() {
+			var params = { "search" : "hero" };
+			helper.executeApplet("cb_imdb_search", params, function(resp) {
+				JSON.stringify(resp);
+			});
+		}
+
+		function LoadFile() {
+			
+		}
+	</script>
+</head>
+
+<body onload="initialize()">
+	<!-- All of the mosync.nativeui widgets should be wraped inside a tag with id="NativeUI" -->
+	<div id="NativeUI">
+		<!-- the element with id="mainScreen" is loaded to the device screen  by default -->
+		<div widgetType="TabScreen" id="mainScreen">
+			<div widgetType="Screen" id="CBSettings" title="settings"
+				icon_android="img/TabIconWebViewAndroid.png"
+				icon_iOS="img/TabIconWebView.png">
+				<div widgetType="VerticalLayout" id="CBSettingsLayout"
+					width="-1" height="-1">
+					<div widgetType="EditBox" id="CBAppCode"
+						width="100%" placeholder="Application code">
+					</div>
+					<div widgetType="EditBox" id="CBAppUniq"
+						width="100%" placeholder="Application unique code">
+					</div>
+					<div widgetType="EditBox" id="CBAppPwd"
+						width="100%" placeholder="Application password">
+					</div>
+					<div widgetType="Button" id="CBSettingsButton"
+						width="100%" text="Save Settings"
+						onEvent="CBSaveSettingsClicked()">
+					</div>
+				</div>
+			</div>
+			<div widgetType="Screen" id="CBLog" title="log"
+				icon_android="img/TabIconWebViewAndroid.png"
+				icon_iOS="img/TabIconWebView.png">
+				<div widgetType="VerticalLayout" id="CBLogLayout"
+					width="-1" height="-1">
+					<div widgetType="Button" id="CBLogButton"
+						width="100%" text="Log Line"
+						onEvent="CBLogLineClicked()">
+					</div>
+					<div widgetType="Button" id="LoadFileButton"
+						width="100%" text="Test Load File"
+						onEvent="LoadFile()">
+					</div>
+				</div>
+			</div>
+			<div widgetType="Screen" id="CBData" title="data"
+				icon_android="img/TabIconWebViewAndroid.png"
+				icon_iOS="img/TabIconWebView.png">
+				<div widgetType="VerticalLayout" id="CBDataLayout"
+					width="-1" height="-1">
+					<div widgetType="Button" id="CBInsertButton"
+							width="100%" text="Insert Document"
+							onEvent="CBInsertClicked(false)">
+					</div>
+					<div widgetType="Button" id="CBInsertFilesButton"
+							width="100%" text="Insert Document With Files"
+							onEvent="CBInsertClicked(true)">
+					</div>
+					<div widgetType="Button" id="CBSearchButton"
+							width="100%" text="Search documents"
+							onEvent="CBSearchClicked()">
+					</div>
+				</div>
+			</div>
+			<div widgetType="Screen" id="CBNotif" title="notifications"
+				icon_android="img/TabIconWebViewAndroid.png"
+				icon_iOS="img/TabIconWebView.png">
+				<div widgetType="VerticalLayout" id="CBNotifLayout"
+					width="-1" height="-1">
+					<div widgetType="Button" id="CBNotifSubButton"
+						width="100%" text="Subscribe for notifications"
+						onEvent="CBNotifSubscribe()">
+					</div>
+					<div widgetType="Button" id="CBNotifSendButton"
+						width="100%" text="Send push notification"
+						onEvent="CBNotifPush()">
+					</div>
+				</div>
+			</div>
+			<div widgetType="Screen" id="CBFunctions" title="CloudFunctions"
+				icon_android="img/TabIconWebViewAndroid.png"
+				icon_iOS="img/TabIconWebView.png">
+				<div widgetType="VerticalLayout" id="CBFunctionsLayout"
+					width="-1" height="-1">
+					<div widgetType="Button" id="CBExecFunction"
+						width="100%" text="execute test CloudFunction"
+						onEvent="CBFunctionExecute()">
+					</div>
+					<div widgetType="Button" id="CBExecApplet"
+						width="100%" text="execute test applet"
+						onEvent="CBAppletExecute()">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

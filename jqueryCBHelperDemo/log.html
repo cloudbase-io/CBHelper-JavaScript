@@ -1,0 +1,57 @@
+<!DOCTYPE html>  
+<html>  
+	<head>  
+	   <meta charset="utf-8">  
+	   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />  
+	   <title> cloudbase.io helper class demo </title>  
+	   <link rel="stylesheet" href="jquery/jquery.mobile.custom.structure.css" />
+	   <link rel="stylesheet" href="jquery/cbhelper.css" />
+	   <script src="jquery/jquery-1.9.1.min.js"></script>  
+	   <script src="jquery/jquery.mobile.custom.js"></script>
+	   <script src="CBHelperDemo.js"></script>
+	   
+	   <script src="CBHelper/platforms/GenericHelper.js"></script>
+	   <script src="CBHelper/CBHelper.js"></script>
+	   <script src="CBHelper/CBXMLHttpRequest.js"></script>
+	   <script src="CBHelper/md5.js"></script>
+ 	</head>
+ 	<body>  
+ 		<div data-role="page" id="pageDiv">  
+			<div data-role="header">
+				<h1>cloudbase.io demo application</h1>  
+			</div>  
+			<div data-role="content">
+				<h2>Log APIs</h2>
+				<div data-role="fieldcontain" class="ui-hide-label">
+					<label for="logmsg">Log message:</label>
+					<input type="text" name="logmsg" id="logmsg" value="" placeholder="Log message" />
+				</div>
+				<div data-role="fieldcontain" class="ui-hide-label">
+					<label for="loglevel">Log severity:</label>
+					<input list="logLevels" type="text" name="loglevel" id="loglevel" value="" placeholder="Log severity" />
+					<datalist id="logLevels">
+		            	<option value="DEBUG">
+		            	<option value="INFO">
+		            	<option value="WARNING">
+		            	<option value="ERROR">
+		            	<option value="FATAL">
+		            	<option value="EVENT">
+		            </datalist>
+				</div>
+				
+				<button onclick="sendLogMessage();">Send log</button>
+			</div>  
+			<footer data-role="footer" data-position="fixed" data-fullscreen="true">
+				<div data-role="navbar" id="footerDiv">
+					<ul id="footerToolbar">
+						<li><a href="settings.html">Settings</a></li>
+						<li><a href="log.html" class="ui-btn-active">Log</a></li>
+						<li><a href="data.html">Data</a></li>
+						<li><a href="cloudfunctions.html">CloudFunctions</a></li>
+					</ul>
+				</div>
+			</footer>  
+		</div>  
+	</body>  
+</html>  
+</head>  

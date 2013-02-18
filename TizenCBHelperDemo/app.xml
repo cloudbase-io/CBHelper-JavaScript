@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tizenProject>
+    <projectInfo>
+        <title>cloudbase.io demo application</title>
+        <author>cloudbase.io</author>
+        <version>0.0.1</version>
+    </projectInfo>
+    <pageSystem>
+        <frameworks>
+            <framework-theme name="tizen-white"/>
+            <script type="system" path="tizen-web-ui-fw/latest/js/jquery.js"/>
+            <script type="system" path="./app.managed.js"/>
+            <script type="system" path="tizen-web-ui-fw/latest/js/tizen-web-ui-fw-libs.js"/>
+            <script type="system" path="tizen-web-ui-fw/latest/js/tizen-web-ui-fw.js" data-framework-theme="tizen-white" data-framework-viewport-scale="false"/>
+            <script type="system" path="./tizen-ui-builder-fw/page-system.js"/>
+        </frameworks>
+        <libraries>
+            <script type="user" path="./CBHelper/json.js" data-framework-theme="" data-framework-viewport-scale=""/>
+            <script type="user" path="./CBHelper/CBHelper.js" data-framework-theme="" data-framework-viewport-scale=""/>
+            <script type="user" path="./CBHelper/md5.js" data-framework-theme="" data-framework-viewport-scale=""/>
+            <script type="user" path="./CBHelper/platforms/TizenHelper.js" data-framework-theme="" data-framework-viewport-scale=""/>
+            <script type="user" path="./CBHelper/CBXMLHttpRequest.js" data-framework-theme="" data-framework-viewport-scale=""/>
+        </libraries>
+        <pages>
+            <page type="system" name="settings" startup="true" pagePath="./page/settings.page" jsPath="./page/settings.js" managedJsPath="./page/settings.managed.js" htmlPath="./page/settings.html"/>
+            <page type="system" name="log" startup="false" pagePath="./page/log.page" jsPath="./page/log.js" managedJsPath="./page/log.managed.js" htmlPath="./page/log.html"/>
+            <page type="system" name="data" startup="false" pagePath="./page/data.page" jsPath="./page/data.js" managedJsPath="./page/data.managed.js" htmlPath="./page/data.html"/>
+            <page type="system" name="cloudfunction" startup="false" pagePath="./page/cloudfunction.page" jsPath="./page/cloudfunction.js" managedJsPath="./page/cloudfunction.managed.js" htmlPath="./page/cloudfunction.html"/>
+        </pages>
+        <entries>
+            <script type="system" path="./tizen-ui-builder-fw/app-entry.js"/>
+            <script type="system" path="./app.js"/>
+        </entries>
+        <stylesheets>
+            <stylesheet path="./css/style.css"/>
+        </stylesheets>
+    </pageSystem>
+</tizenProject>

@@ -1,0 +1,57 @@
+
+<!--
+Tizen Web UI Application Page
+
+@generated Tizen Web UI Builder
+@attribute managed, readonly, volatile
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div data-role="page" id="settings" data-add-back-btn="none">
+      <div data-role="header" id="header1">
+        <h1>cloudbase.io demo application</h1>
+      </div>
+      <div data-role="content" data-scroll="y">
+        <form id="formcontrol1" method="GET" data-ajax="true">
+          <div data-role="fieldcontain">
+            <label for="appCodeInput"></label>
+            <input id="appCodeInput" type="text" placeholder="Application code">
+          </div>
+          <div data-role="fieldcontain">
+            <label for="appSecretInput"></label>
+            <input id="appSecretInput" type="text" placeholder="Application secret code">
+          </div>
+          <div data-role="fieldcontain">
+            <label for="appPwdInput"></label>
+            <input id="appPwdInput" type="password" name="Application password" placeholder="Application password">
+          </div>
+        </form>
+        <div data-role="button" id="saveSettingsButton" data-corners="true" data-inline="false" ontap="saveSettingsButton_ontap">Save Settings</div>
+      </div>
+      <div data-role="footer" id="footer1">
+        <div data-role="controlbar" id="controlbar1" data-style="toolbar">
+          <ul>
+            <li id="controlbaritem1">
+              <a href="settings.html" data-icon="ctrlbar-settings">Settings</a>
+            </li>
+            <li id="controlbaritem2">
+              <a href="log.html" data-icon="ctrlbar-compose">Log</a>
+            </li>
+            <li id="controlbaritem3">
+              <a href="data.html" data-icon="ctrlbar-attach">Data</a>
+            </li>
+            <li id="controlbaritem4">
+              <a href="cloudfunction.html" data-icon="ctrlbar-info">CloudFunctions</a>
+            </li>
+            <li id="controlbaritem5">
+              <a href="notifications.html" data-icon="ctrlbar-set_as">Notifications</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

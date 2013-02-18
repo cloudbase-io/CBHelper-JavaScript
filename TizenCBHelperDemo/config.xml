@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/CBHelperDemo" version="0.1" viewmodes="fullscreen">  
+	  
+	<name>CBHelperDemo</name>  
+	  
+	<icon src="icon.png"/>  
+	<feature name="http://tizen.org/api/application" required="true"/>
+	<feature name="http://tizen.org/api/tizen" required="true"/>
+<content src="app.html"/>
+<tizen:application id="UhUYUo148V" required_version="1.0"/>
+<feature name="http://tizen.org/api/systeminfo" required="true"/>
+<access origin="https://api.cloudbase.io" subdomains="true"/>
+    <access origin="http://api.cloudbase.io" subdomains="true"/>
+ 
+ 
+<feature name="http://tizen.org/api/filesystem" required="true"/>
+    <feature name="http://tizen.org/api/mediacontent" required="true"/>
+</widget>

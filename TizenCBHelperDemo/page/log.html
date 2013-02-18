@@ -1,0 +1,62 @@
+
+<!--
+Tizen Web UI Application Page
+
+@generated Tizen Web UI Builder
+@attribute managed, readonly, volatile
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div data-role="page" id="log" data-add-back-btn="none">
+      <div data-role="header" id="header1">
+        <h1>cloudbase.io demo application</h1>
+      </div>
+      <div data-role="content" data-scroll="y">
+        <h3 id="heading1">Log APIs</h3>
+        <form id="formcontrol1" method="GET" data-ajax="true">
+          <div data-role="fieldcontain">
+            <label for="logMessageInput"></label>
+            <input id="logMessageInput" type="text" placeholder="Log message">
+          </div>
+          <div data-role="fieldcontain">
+            <label for="logLevelInput"></label>
+            <input list="logLevels" id="logLevelInput" type="text" placeholder="Log severity">
+            <datalist id="logLevels">
+            	<option value="DEBUG">
+            	<option value="INFO">
+            	<option value="WARNING">
+            	<option value="ERROR">
+            	<option value="FATAL">
+            	<option value="EVENT">
+            </datalist>
+          </div>
+        </form>
+        <div data-role="button" id="sendLogButton" data-corners="true" data-inline="false" ontap="sendLogButton_ontap">Log message</div>
+      </div>
+      <div data-role="footer" id="footer1">
+        <div data-role="controlbar" id="controlbar1" data-style="toolbar">
+          <ul>
+            <li id="controlbaritem1">
+              <a href="settings.html" data-icon="ctrlbar-settings">Settings</a>
+            </li>
+            <li id="controlbaritem2">
+              <a href="log.html" data-icon="ctrlbar-compose">Log</a>
+            </li>
+            <li id="controlbaritem3">
+              <a href="data.html" data-icon="ctrlbar-attach">Data</a>
+            </li>
+            <li id="controlbaritem4">
+              <a href="cloudfunction.html" data-icon="ctrlbar-info">CloudFunctions</a>
+            </li>
+            <li id="controlbaritem5">
+              <a href="notifications.html" data-icon="ctrlbar-set_as">Notifications</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

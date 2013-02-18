@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1.5">
+<active.build.cfg active="Release"/>
+<target-profile device="iPad" vendor="iOS"/>
+<properties>
+<property key="privileged.access.token" value="5E0191BDD314901BFD177529470A0B77"/>
+</properties>
+</project>

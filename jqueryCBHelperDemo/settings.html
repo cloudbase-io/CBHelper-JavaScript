@@ -1,0 +1,68 @@
+<!DOCTYPE html>  
+<html>  
+	<head>  
+		<meta charset="utf-8">  
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />  
+		<title> cloudbase.io helper class demo </title>  
+		<link rel="stylesheet" href="jquery/jquery.mobile.custom.structure.css" />
+		<link rel="stylesheet" href="jquery/cbhelper.css" />
+		<script src="jquery/jquery-1.9.1.min.js"></script>  
+		<script src="jquery/jquery.mobile.custom.js"></script>
+		<script src="CBHelperDemo.js"></script>
+	   
+		<script src="CBHelper/platforms/GenericHelper.js"></script>
+		<script src="CBHelper/CBHelper.js"></script>
+		<script src="CBHelper/CBXMLHttpRequest.js"></script>
+		<script src="CBHelper/md5.js"></script>
+	   
+		<script type="teext/javascript">
+			$(document).ready(function () {
+	
+				if (localStorage) {
+					if ($('#appcode'))
+						$('#appcode').val(localStorage.getItem("app_code"));
+						
+					if ($('#appuniq'))
+						$('#appuniq').val(localStorage.getItem("app_uniq"));
+						
+					if ($('#apppwd'))
+						$('#apppwd').val(localStorage.getItem("app_pwd"));
+				}
+			});
+		</script>
+	</head>
+ 	<body>  
+ 		<div data-role="page" id="pageDiv">  
+			<div data-role="header">
+				<h1>cloudbase.io demo application</h1>  
+			</div>  
+			<div data-role="content">
+				<h2>Application settings</h2>
+				<div data-role="fieldcontain" class="ui-hide-label">
+					<label for="appcode">Application code:</label>
+					<input type="text" name="appcode" id="appcode" value="" placeholder="Application code" />
+				</div>
+				<div data-role="fieldcontain" class="ui-hide-label">
+					<label for="appuniq">Application unique code:</label>
+					<input type="text" name="appuniq" id="appuniq" value="" placeholder="Application unique code" />
+				</div>
+				<div data-role="fieldcontain" class="ui-hide-label">
+					<label for="apppwd">Application password:</label>
+					<input type="password" name="apppwd" id="apppwd" value="" placeholder="Application password" />
+				</div>
+				<button onclick="saveSettings();">Save settings</button>
+			</div>  
+			<footer data-role="footer" data-position="fixed" data-fullscreen="true">
+				<div data-role="navbar" id="footerDiv">
+					<ul id="footerToolbar">
+						<li><a href="settings.html" class="ui-btn-active">Settings</a></li>
+						<li><a href="log.html">Log</a></li>
+						<li><a href="data.html">Data</a></li>
+						<li><a href="cloudfunctions.html">CloudFunctions</a></li>
+					</ul>
+				</div>
+			</footer>  
+		</div>  
+	</body>  
+</html>  
+</head>  

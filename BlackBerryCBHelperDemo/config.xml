@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<widget xmlns:rim="http://www.blackberry.com/ns/widgets" id="bbUISamples" version="0.9.1.25" rim:header="RIM-Widget:rim/widget" xmlns="http://www.w3.org/ns/widgets">
+  <rim:navigation mode="focus" />
+  <name>CBHelper Demo</name>
+  <description>Cloudbase.io WebWorks Demo</description>
+  <author href="https://cloudbase.io">cloudbase.io</author>
+  <icon src="images\icon.png" />
+  <icon src="images\icon.png" rim:hover="true" />
+  <rim:splash src="images\bb10-splash-landscape.png" />
+  <rim:splash src="images\bb10-splash-portrait.png" />
+  <access subdomains="true" uri="http://api.dev-cloudbase.io"/>
+  <access subdomains="true" uri="http://api.cloudbase.io"/>
+  <content src="index.html" />
+  <feature id="blackberry.ui.menu" />
+  <feature id="blackberry.ui.dialog"/>
+  <feature id="webworks.ui.filePicker" />
+  <feature id="blackberry.identity" />
+  <feature id="blackberry.system.event" />
+  <feature id="blackberry.app" />
+  <feature id="blackberry.app.event"/>
+</widget>
