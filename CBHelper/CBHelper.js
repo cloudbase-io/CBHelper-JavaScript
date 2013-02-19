@@ -719,8 +719,3 @@ CBHelper.prototype.prepareAttachmentFileFromPath = function(filePath, fileReady)
 CBHelper.prototype.generateUrl = function() {
 	return (this.isHttps?"http":"http") + "://" + this.domain;
 };
-
-
-function fCBEscapeString( str ) {
-    return (str+'').replace(/([\\"'])/g, "\\$1").replace(/\0/g, "\\0");
-}
