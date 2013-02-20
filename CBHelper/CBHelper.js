@@ -216,8 +216,8 @@ function CBHelper (appCode, appUniq, platformHelper) {
 	*/
     this.authPassword			= null;
     
-    this.isHttps				= false;
-    this.domain					= "api.dev-cloudbase.io";
+    this.isHttps				= true;
+    this.domain					= "api.cloudbase.io";
     this.requestParamBoundary	= "---------------------------14737809831466499882746641449";
     
     // check whether the broser supports the FormData object
