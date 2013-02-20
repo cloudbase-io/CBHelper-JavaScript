@@ -107,6 +107,13 @@ function CBHelperResponseInfo() {
 }
 
 /**
+ * returns true is the call to the cloudbase.io APIs was successful
+ */
+CBHelperResponseInfo.prototype.callStatus = function() {
+	return (this.httpStatus == 200);
+};
+
+/**
 * This object is used to store and send to the cloudbase.io servers the location information - 
 * it should be set in the <strong>currentLocation</strong> property of the CBHelper object.
 *
@@ -117,6 +124,12 @@ function CBHelperCurrentLocation(latitude, longitude, altitude) {
 	this.lat = latitude;
 	this.lng = longitude;
 	this.alt = altitude;
+}
+
+CBHelperCurrentLocation.prototype.isValid = function() {
+	return (typeof this.lat == 'number' &&  this.lat >= 0.00 && this.lat <= 90.00 
+		&& typeof this.lng == 'number' && this.lng >= 0.00 && this.lng <= 360.00
+		&& typeof this.alt == 'number');
 }
 
 /**
