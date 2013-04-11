@@ -187,9 +187,9 @@ function CBHelper (appCode, appUniq, platformHelper) {
 	* 
 	* @property currentLocation
 	* @type CBHelperCurrentLocation
-	* @default {}
+	* @default null
 	*/
-    this.currentLocation		= {};
+    this.currentLocation		= null;
     
     /**
 	* If the application settings on cloudbase.io define the authentication properties then
@@ -222,6 +222,18 @@ function CBHelper (appCode, appUniq, platformHelper) {
     
     // check whether the broser supports the FormData object
     this.supportsFormData		= (window.FormData !== undefined);
+    
+    this.getCurrentLocation = function() {
+    	return this.currentLocation;
+    }
+    
+    this.getAuthUsername = function() {
+    	return this.authUsername;
+    }
+    
+    this.getAuthPassword = function() {
+    	return this.authPassword;
+    }
 }
 
 CBHelper.prototype.defaultLogCategory = "DEFAULT";
@@ -268,7 +280,6 @@ CBHelper.prototype.registerDevice = function() {
 	url = this.generateUrl() + "/" + this.appCode + "/register";
 	
 	var pHelper = this.platformHelper;
-	pHelper.log("starting session..");
 	this.sendHttpRequest("register-device", url, params, null, null, function(parsedData) {
 		//pHelper.log("received session id: " + parsedData.outputData.sessionid);
 		CBSessionId = parsedData.outputData.sessionid;
@@ -633,9 +644,9 @@ CBHelper.prototype.prepareRequestParams = function(params, additionalParams, fil
 		if (params)
 			outParams += this.prepareRequestParamBody("post_data", JSON.stringify(params));
 			
-		if (this.authUsername != null && this.authPassword != null) {
-			outParams += this.prepareRequestParamBody("cb_auth_user", this.authUsername);
-			outParams += this.prepareRequestParamBody("cb_auth_password", this.authPassword);
+		if (this.getAuthUsername() != null && this.getAuthPassword() != null) {
+			outParams += this.prepareRequestParamBody("cb_auth_user", this.getAuthUsername());
+			outParams += this.prepareRequestParamBody("cb_auth_password", this.getAuthPassword());
 		}
 		
 		if (typeof additionalParams !== 'undefined') {
@@ -644,8 +655,8 @@ CBHelper.prototype.prepareRequestParams = function(params, additionalParams, fil
 			}
 		}
 		
-		if (typeof currentLocation === 'CBHelperCurrentLocation') {
-			outParams += this.prepareRequestParamBody("current_location", JSON.stringify(this.currentLocation));
+		if ( this.getCurrentLocation() ) {
+			outParams += this.prepareRequestParamBody("location_data", JSON.stringify(this.getCurrentLocation()));
 		}
 		
 		if (files != null) {
@@ -669,9 +680,9 @@ CBHelper.prototype.prepareRequestParams = function(params, additionalParams, fil
 			formOutParams.append("post_data", JSON.stringify(params));
 		}
 		
-		if (this.authUsername != null && this.authPassword != null) {
-			formOutParams.append("cb_auth_user", this.authUsername);
-			formOutParams.append("cb_auth_password", this.authPassword);
+		if (this.getAuthUsername() != null && this.getAuthPassword() != null) {
+			formOutParams.append("cb_auth_user", this.getAuthUsername());
+			formOutParams.append("cb_auth_password", this.getAuthPassword());
 		}
 		
 		if (typeof additionalParams !== 'undefined') {
@@ -681,9 +692,9 @@ CBHelper.prototype.prepareRequestParams = function(params, additionalParams, fil
 			}
 		}
 		
-		if (typeof currentLocation === 'CBHelperCurrentLocation') {
+		if ( this.getCurrentLocation() ) {
 			//params += "&current_location=" + JSON.stringify(this.currentLocation);
-			formOutParams.append("current_location", JSON.stringify(this.currentLocation));
+			formOutParams.append("location_data", JSON.stringify(this.getCurrentLocation()));
 		}
 		
 		if (files != null) {
