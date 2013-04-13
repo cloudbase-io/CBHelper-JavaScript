@@ -50,6 +50,10 @@ function BBWebWorksHelper() {
 	 * a unique identifier for the device. In Tizen's case we use the IMEI
 	 */
 	this.deviceUniqueIdentifier	= blackberry.system.hardwareId;
+	/**
+	 * Whether push notifications are enabled on this platform
+	 */
+	this.pushNotifications		= true;
 	
 	this.logToDomElement = null;
 	

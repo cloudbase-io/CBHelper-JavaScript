@@ -51,6 +51,10 @@ function TizenHelper() {
 	 * a unique identifier for the device. In Tizen's case we use the IMEI
 	 */
 	this.deviceUniqueIdentifier	= "";
+	/**
+	 * Whether push notifications are enabled on this platform
+	 */
+	this.pushNotifications		= false;
 	
 	//this.log(window.navigator.language);
 }

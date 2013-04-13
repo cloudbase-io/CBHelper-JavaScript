@@ -234,6 +234,10 @@ function CBHelper (appCode, appUniq, platformHelper) {
     this.getAuthPassword = function() {
     	return this.authPassword;
     }
+    
+    this.getPlatformHelper = function() {
+    	return this.platformHelper;
+    }
 }
 
 CBHelper.prototype.defaultLogCategory = "DEFAULT";
@@ -482,6 +486,83 @@ CBHelper.prototype.downloadFile = function(fileId, responder, progress) {
 
 // /CloudBase functions
 
+// Notification functions
+
+/**
+ * Registers the current device to send and receive push notifications in a specific channel.
+ * This method will be triggered only if supported by the platform specific helper.
+ * 
+ * @param token The token returned by the original provider
+ * @param channel The notification channel to subscribe to - by default all devices are registered in the 'all' channel
+ * @param A function to receive the status of the subscription: function(sub = boolean) - true if the device was subscribed correctly
+ */
+CBHelper.prototype.registerDeviceForNotifications = function(token, channel, responder) {
+	if ( this.getPlatformHelper().pushNotifications ) {
+		var url = this.generateUrl() + "/" + this.appCode + "/notifications-register";
+		var params = {
+			"action": "subscribe",
+			"device_key": token,
+			"device_network" : this.getPlatformHelper().getPushNotificationsPlatform(),
+			"channel" : channel
+		}
+		
+		this.sendHttpRequest("notifications-register", url, params, null, null, function(resp) {
+			responder(resp.callStatus);
+		});
+	} else {
+		responder(false);
+	}
+}
+
+/**
+ * Unregisters a device from a push notification channel on cloudbase.io
+ * 
+ * @param token The unique token identifying the device
+ * @param channel The channel to unsubscribe from 
+ * @param fromAll Whether to completely remove the device from the push notifications list ( will also unsubscribe from the 'all' channel)
+ */
+CBHelper.prototype.unregisterDeficeForNotifications = function(token, channel, fromAll) {
+	if ( this.getPlatformHelper().pushNotifications ) {
+		var url = this.generateUrl() + "/" + this.appCode + "/notifications-register";
+		var params = {
+			"action": "unsubscribe",
+			"device_key": token,
+			"device_network" : this.getPlatformHelper().getPushNotificationsPlatform(),
+			"channel" : channel
+		}
+		if ( fromAll ) {
+			params.from_all = true;
+		}
+		
+		this.sendHttpRequest("notifications-register", url, params, null, null, function(resp) {
+			responder(resp.callStatus);
+		});
+	} else {
+		responder(false);
+	}
+}
+
+/**
+ * Sends a push notification to all devices subscribed to the channel - This method will work only if the 
+ * application's security settings on cloudbase.io allow client devices to push notifications
+ * 
+ * @param text The push notification content
+ * @param channel The name of the channel to push to
+ * @param iosCertificateType Whether to use the "development" or "production" certificate to send notifications to iOS devices
+ */
+CBHelper.prototype.sendNotification = function(text, channel, iosCertificateType) {
+	if ( this.getPlatformHelper().pushNotifications ) {
+		var url = this.generateUrl() + "/" + this.appCode + "/notifications";
+		var params = {
+			"channel" : channel,
+			"cert_type" : iosCertificateType,
+			"alert" : text
+		};
+		
+		this.sendHttpRequest("notifications", url, params, null, null);
+	}
+}
+
 /**
  * Sends an email to the given recipient using a template previously created on cloudbase.io.
  * Email templates can be managed from the application control panel on cloudbase.io
@@ -504,6 +585,8 @@ CBHelper.prototype.sendEmail = function(recipient, subject, templateCode, vars) 
 	url = this.generateUrl() + "/" + this.appCode + "/email";
 	this.sendHttpRequest("email", url, params, null, null, responder);
 };
+
+// /Notification functions
 
 // CloudFunction functions
 /**

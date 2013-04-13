@@ -50,6 +50,10 @@ function GenericHelper() {
 	 * a unique identifier for the device. In Tizen's case we use the IMEI
 	 */
 	this.deviceUniqueIdentifier	= this.getUniqueIdentifier();
+	/**
+	 * Whether push notifications are enabled on this platform
+	 */
+	this.pushNotifications		= false;
 	
 	this.logToDomElement = null;
 	

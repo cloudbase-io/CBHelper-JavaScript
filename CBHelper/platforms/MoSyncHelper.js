@@ -49,6 +49,10 @@ function MoSyncHelper() {
 	 * a unique identifier for the device. In Tizen's case we use the IMEI
 	 */
 	this.deviceUniqueIdentifier	= window.device.uuid;
+	/**
+	 * Whether push notifications are enabled on this platform
+	 */
+	this.pushNotifications		= true;
 	
 	//this.log(window.navigator.language);
 }
@@ -60,6 +64,22 @@ function MoSyncHelper() {
 MoSyncHelper.prototype.log = function(logMessage) {
 	mosync.rlog(logMessage);
 };
+
+MoSyncHelper.prototype.getPushNotificationsPlatform = function() {
+	if ( device.platform == null ) {
+		return "";
+	}
+	var platform = device.platform.toLowerCase();
+	if ( platform == "iphone" || platform == "ipad" || platform == "ios" ) {
+		return "ios";
+	}
+	if ( platform == "android" || platform == "google" ) {
+		return "and";
+	}
+	if ( platform.indeOf("blackberry") > -1 ) {
+		return "bb";
+	}
+}
 
 /**
  * Reads a file from the device file system given the path and returns it in the form of a CBHelperAttachment structure
