@@ -583,7 +583,7 @@ CBHelper.prototype.sendEmail = function(recipient, subject, templateCode, vars) 
 	};
 	
 	url = this.generateUrl() + "/" + this.appCode + "/email";
-	this.sendHttpRequest("email", url, params, null, null, responder);
+	this.sendHttpRequest("email", url, params, null, null, null);
 };
 
 // /Notification functions
