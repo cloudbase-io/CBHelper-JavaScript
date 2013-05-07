@@ -97,12 +97,37 @@ MoSyncHelper.prototype.prepareAttachmentFileFromPath = function(filePath, fileRe
 		
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
 			function(foundFs) {
-				mosync.rlog("found file system");
-				foundFs.root.getFile(filePath, null, 
+				foundFs.root.getFile(newFile.name, {create: false, exclusive: false}, 
 					function(foundFile) {
 						var reader = new FileReader();
 				        reader.onloadend = function(evt) {
-				            newFile.content = evt.target.result;
+				        	
+				        	try {
+				        		mosync.rlog(evt.target.result.split(',')[1]);
+				        		var binary = atob(evt.target.result.split(',')[1]);
+					        	var length = binary.length;
+					        	var ab = new ArrayBuffer(length);
+					            var ua = new Uint8Array(ab);
+					            for(var i = 0; i < length; i++) {
+					            	ua[i] = binary.charCodeAt(i);
+					            }
+					            newFile.content = new Blob( [ab], {type : "application/octet-stream"});
+				        	} catch(e) {
+				        		window.BlobBuilder = window.BlobBuilder || 
+				        		                         window.WebKitBlobBuilder || 
+				        		                         window.MozBlobBuilder || 
+				        		                         window.MSBlobBuilder;
+				        		if(e.name == 'TypeError' && window.BlobBuilder){
+				        			var bb = new BlobBuilder();
+				        			bb.append([ab]);
+				        			newFile.content = bb.getBlob("application/octet-stream");
+				        		} else if(e.name == "InvalidStateError"){
+				        			newFile.content = new Blob( [ab.buffer], {type : "application/octet-stream"});
+				        		} else{
+				        		    newFile = null  
+				        		}
+				        	}
+				        	
 				            fileReady(newFile);
 				        };
 				        reader.readAsDataURL(foundFile);
@@ -111,6 +136,7 @@ MoSyncHelper.prototype.prepareAttachmentFileFromPath = function(filePath, fileRe
 						mosync.rlog("error requesting file " + JSON.stringify(ex));
 						fileReady(null);
 					});
+				
 			}, 
 			function(ex) {
 				mosync.rlog("error requesting file system " + JSON.stringify(ex));
