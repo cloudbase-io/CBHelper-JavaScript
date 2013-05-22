@@ -39,7 +39,7 @@ MA 02110-1301, USA.
  * The cloudbase.io JavaScript helper class can be included in any website.<br/><br/>
  * It relies on the CBXMLHttpRequest and a platform specific helper libraries being loaded
  *
- * This full reference is a companion to <a href="/documentation/javascript" target="_blank">
+ * This full reference is a companion to <a href="/documentation/javascript/get-started" target="_blank">
  * the tutorial on the cloudbase.io website<a/>
  */
 
@@ -617,6 +617,26 @@ CBHelper.prototype.executeCloudFunction = function(functionCode, params, respond
 CBHelper.prototype.executeApplet = function(appletCode, params, responder) {
 	url = this.generateUrl() + "/" + this.appCode + "/applet/" + appletCode;
     this.sendHttpRequest("applet", url, null, params, null, responder);
+};
+
+/**
+ * Executes a Shared Api provided by an app on cloudbase.io
+ * 
+ * @method executeApplet
+ * @param {String} apiCode The unique identifier for the Shared Api
+ * @param {String} password The password to access the Shared Api, if necessary
+ * @param {Object} params A list of additional parameters for the Shared Api (if needed)
+ * @param {function(CBHelperResponseInfo)} responder A function to handle the reponse returned by cloudbase.io
+ * 	in the form of a CBHelperResponseInfo object
+ */
+CBHelper.prototype.executeSharedApi = function(apiCode, password, params, responder) {
+	url = this.generateUrl() + "/" + this.appCode + "/shared/" + apiCode;
+	
+	if ( password) {
+		params.cb_shared_password = password;
+	}
+	
+    this.sendHttpRequest("shared-api", url, null, params, null, responder);
 };
 // /CloudFunction functions    
 
