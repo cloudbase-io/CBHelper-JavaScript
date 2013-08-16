@@ -37,7 +37,7 @@ function BBWebWorksHelper() {
 	/**
 	 * The device type, this is a static string.
 	 */
-	this.deviceType				= "BlackBerry";
+	this.deviceType				= "bb";
 	/**
 	 * The current language of the OS
 	 */
@@ -69,6 +69,10 @@ BBWebWorksHelper.prototype.log = function(message) {
 		document.getElementById(this.logToDomElement).innerHTML += '<p><pre>' + mesasge + '</pre></p>'; 
 	}
 };
+
+BBWebWorksHelper.prototype.getPushNotificationsPlatform = function() {
+	return "bb";
+}
 
 BBWebWorksHelper.prototype.prepareAttachmentFileFromPath = function(filePath, fileReady) {
 	
